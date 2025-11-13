@@ -143,7 +143,7 @@ async function run() {
       }
     });
 
-    //user section
+    //user section creating
     app.get('/users/me', verifyJWT, async (req, res) => {
       try {
         const email = req.user.email;

@@ -154,7 +154,7 @@ async function run() {
       }
     });
 
-    
+    // bills section
     app.get('/bills', async (req, res) => {
       try {
         const allBills = await billsCollection.find({}).toArray();

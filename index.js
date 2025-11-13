@@ -189,7 +189,7 @@ async function run() {
       }
     });
 
-    // mybills
+    // my bills
 
 app.post('/myBills', verifyJWT, async (req, res) => {
   try {

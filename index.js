@@ -1,4 +1,3 @@
-// index.js
 const express = require('express');
 const cors = require('cors');
 const { MongoClient, ObjectId, ServerApiVersion } = require('mongodb');
@@ -10,7 +9,16 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+const allowedOrigins = ['http://localhost:5173'];
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+}));
 app.use(express.json());
 
 // MongoDB connection
@@ -76,6 +84,7 @@ async function run() {
     const usersCollection = db.collection('users');
     const billsCollection = db.collection('bills');
     const myBillsCollection = db.collection('myBills');
+    console.log(billsCollection)
 
     await seedDataIfEmpty(db);
 
@@ -138,7 +147,9 @@ async function run() {
     // ---------------- BILLS ----------------
     app.get('/bills', async (req, res) => {
       try {
+        console.log("sourav")
         const allBills = await billsCollection.find({}).toArray();
+        console.log(allBills)
         const bills = allBills.map(b => ({ ...b, _id: b._id.toString() }));
         res.send(bills);
       } catch (err) {

@@ -124,7 +124,7 @@ async function run() {
         res.status(500).send({ message: 'Server error' });
       }
     });
-
+    // auth section
     app.post('/auth/login', async (req, res) => {
       try {
         const { email, password } = req.body;
